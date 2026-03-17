@@ -6,8 +6,8 @@
 
 ```mermaid
 erDiagram
-    FOOD_ITEM ||--o{ FOOD_ITEM_LOG : "has"
-    CATEGORY ||--o{ FOOD_ITEM : "has"
+    FOOD_ITEM ||--o{ FOOD_ITEM_LOG : has
+    CATEGORY ||--o{ FOOD_ITEM : has
 
     CATEGORY {
         integer id PK
