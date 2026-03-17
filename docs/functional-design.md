@@ -6,33 +6,33 @@
 
 ```mermaid
 erDiagram
-    FOOD_ITEM ||--o{ FOOD_ITEM_LOG : has
-    CATEGORY ||--o{ FOOD_ITEM : has
+    FOOD_ITEM ||--o{ FOOD_ITEM_LOG : "has"
+    CATEGORY ||--o{ FOOD_ITEM : "has"
 
     CATEGORY {
         integer id PK
-        text key UK "e.g. vegetables, fruits"
-        text icon "emoji icon"
-        integer sort_order "display order"
+        text key UK "英語キー（vegetables, fruits 等）"
+        text icon "絵文字アイコン"
+        integer sort_order "表示順"
     }
 
     FOOD_ITEM {
         integer id PK
-        text name "item name"
-        integer category_id FK "category ref"
-        integer quantity "0-100 percent"
-        text status "active or consumed or wasted or deleted"
-        text created_at "ISO 8601"
-        text updated_at "ISO 8601"
+        text name "食材名"
+        integer category_id FK "カテゴリ"
+        integer quantity "残量（0〜100）"
+        text status "active / consumed / wasted / deleted"
+        text created_at "作成日時（ISO 8601）"
+        text updated_at "更新日時（ISO 8601）"
     }
 
     FOOD_ITEM_LOG {
         integer id PK
-        integer food_item_id FK "food item ref"
-        text action "created or updated or consumed or wasted or deleted"
-        integer quantity_before "before change"
-        integer quantity_after "after change"
-        text created_at "ISO 8601"
+        integer food_item_id FK "食材ID"
+        text action "created / updated / consumed / wasted / deleted"
+        integer quantity_before "変更前の残量"
+        integer quantity_after "変更後の残量"
+        text created_at "記録日時（ISO 8601）"
     }
 ```
 
