@@ -20,7 +20,7 @@ erDiagram
         integer id PK
         text name "食材名"
         integer category_id FK "カテゴリ"
-        integer quantity "残量（0〜100）"
+        integer quantity "残量（0〜200）"
         text status "active / consumed / wasted / deleted"
         text created_at "作成日時（ISO 8601）"
         text updated_at "更新日時（ISO 8601）"
@@ -54,7 +54,7 @@ erDiagram
 
 #### `food_item`
 
-- `quantity`: 0〜100 の整数。スライダーの値をそのまま保存
+- `quantity`: 0〜200 の整数。スライダーの値をそのまま保存。100% が標準的な在庫量、100% 超は買いすぎを示す
 - `status`:
   - `active`: 在庫あり（一覧に表示）
   - `consumed`: 使い切り済み（一覧から非表示）
@@ -186,7 +186,7 @@ flowchart TD
 └─────────────────────────────────┘
 ```
 
-- スライダー: 0〜100 のステップ、ドラッグで残量変更、離した時点で保存
+- スライダー: 0〜200 のステップ、ドラッグで残量変更、離した時点で保存。100% 超は買いすぎ状態を示す
 - Used Up: 確認ダイアログ → consumed 記録 → ポジティブフィードバック → 一覧に戻る
 - Wasted: 確認ダイアログ → wasted 記録 → 一覧に戻る
 - edit: 食材名・カテゴリの編集モードに切り替え
@@ -210,6 +210,12 @@ flowchart TD
 │  │   12   │  │   4    │       │
 │  └────────┘  └────────┘       │
 │                                 │
+│  ── Negative Indicators ──     │
+│  ┌────────┐┌────────┐┌──────┐ │
+│  │Overbuyt││Unneces.││Partl.│ │
+│  │   2    ││   3    ││  1   │ │
+│  └────────┘└────────┘└──────┘ │
+│                                 │
 │  ┌─────────────────────────┐   │
 │  │  Current Items: 8       │   │
 │  └─────────────────────────┘   │
@@ -222,6 +228,10 @@ flowchart TD
 - Use-up Rate: consumed / (consumed + wasted) × 100
 - Used Up: consumed 件数の累計
 - Wasted: wasted 件数の累計
+- ネガティブ指標（`food_item_log` から集計）:
+  - Overbought: `quantity_after > 100` の回数（買いすぎ）
+  - Unnecessary Restock: `quantity_before >= 1` かつ `quantity_after > quantity_before` の回数（在庫があるのに買い足し）
+  - Partial Waste: `action = wasted` かつ `quantity_before > 0` の回数（残ありで廃棄）
 - Current Items: status = active の件数
 - データ 0 件時: 「まだデータがありません」メッセージ
 
@@ -268,6 +278,7 @@ App
 
 | 残量 | 色 |
 |------|-----|
+| 101〜200% | 紫 (#9C27B0) — 買いすぎ |
 | 51〜100% | 緑 (#4CAF50) |
 | 21〜50% | 黄 (#FFC107) |
 | 0〜20% | 赤 (#F44336) |
