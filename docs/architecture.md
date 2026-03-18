@@ -5,15 +5,17 @@
 | カテゴリ | 技術 | バージョン | 選定理由 |
 |---------|------|-----------|---------|
 | 言語 | TypeScript | 5.x | 型安全性、IDE サポート |
-| フレームワーク | React Native (Expo) | SDK 52+ | クロスプラットフォーム、managed workflow で iOS/Android 同時対応 |
-| ナビゲーション | Expo Router | v4+ | ファイルベースルーティング、タブ・モーダル対応 |
-| データベース | expo-sqlite | - | ローカル完結、SQL ベースで集計クエリが容易 |
+| フレームワーク | React Native (Expo) | SDK 54 | クロスプラットフォーム、managed workflow で iOS/Android 同時対応 |
+| React Native | React Native | 0.81 | Expo SDK 54 同梱 |
+| React | React | 19.1.0 | Expo SDK 54 同梱 |
+| ナビゲーション | Expo Router | v4 | ファイルベースルーティング、タブ・モーダル対応 |
+| データベース | expo-sqlite | SDK 同梱 | ローカル完結、SQL ベースで集計クエリが容易 |
 | 状態管理 | React hooks (useState/useContext) | - | MVP 規模では十分、外部ライブラリ不要 |
 | i18n | expo-localization + カスタム | - | OS 言語検出、軽量な実装 |
 | テスト | Jest + React Native Testing Library | - | Expo 標準のテスト環境 |
 | リント | ESLint + Prettier | - | コード品質・フォーマット統一 |
 | パッケージマネージャ | pnpm | 9.x | 高速、ディスク効率 |
-| Node バージョン管理 | fnm | - | 軽量・高速 |
+| Node.js | Node.js | 24.x | fnm で管理（Expo SDK 54 最低要件: 20.19.x） |
 
 ## システム構成図
 
