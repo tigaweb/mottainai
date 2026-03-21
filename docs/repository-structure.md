@@ -51,8 +51,11 @@ mottainai/
 │   ├── en.ts                     # 英語（デフォルト）
 │   └── ja.ts                     # 日本語
 │
+├── hooks/                        # カスタムフック（必要に応じて追加）
+│   └── (例: useFoodItems.ts, useDatabase.ts)
+│
 ├── constants/                    # 定数定義
-│   └── index.ts                  # カラーコード、カテゴリ定義等
+│   └── index.ts                  # カラーコード等（※カテゴリ実データは MigrationManager で管理）
 │
 ├── __tests__/                    # テスト
 │   ├── services/
@@ -125,6 +128,18 @@ mottainai/
 
 - 言語ごとに翻訳ファイルを分離（`en.ts`, `ja.ts`）
 - キーは英語ベースのドット記法（例: `home.title`, `item.usedUp`）
+
+### `hooks/`
+
+- 画面間で共有するカスタムフックを配置（例: `useFoodItems`, `useDatabase`）
+- MVP 初期では不要な場合もあるため、必要に応じて追加する
+- 1 ファイル = 1 フック（`use{Name}.ts`）
+
+### `constants/`
+
+- UI 用の定数（カラーコード、スタイル値等）を配置
+- カテゴリの実データ（シードデータ）は `MigrationManager` で管理し、ここには置かない
+- カテゴリの型定義は `types/` に配置
 
 ### `__tests__/`
 
